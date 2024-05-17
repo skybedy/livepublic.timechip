@@ -1,0 +1,7 @@
+Poradi;Jmeno;Prijmeni;Kategorie;Cas
+1;Marek;ŠROLL;Muži 19-39, 35km;1:17:18
+2;Petr;Černý;Muži 19-39, 35km;1:18:00
+3;Martin;Lepič;Muži 40-49, 35km;1:18:11
+1;Michaela;Procházková;Ženy 19-39, 35km;1:28:41
+2;Lucie;KUBÍNOVÁ;Ženy 19-39, 35km;1:30:01
+3;Jana;Šimánková;Ženy 19-39, 35km;1:32:51

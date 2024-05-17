@@ -1,0 +1,186 @@
+<?php
+    
+    if($this->laps_only){
+	require_once 'type_13_laps_only.php';
+    }
+    else{
+	$colspan = 4;
+	//orlice 2015
+	if($category_id == 'all'){
+	    $str .= '<h4 class="headline-results">'.$this->race_name.', výsledky podle kategorí</h4>';
+	    $sql = "SELECT id_kategorie,kod_k AS kod_kategorie,nazev_k AS nazev_kategorie,poradi_podzavodu FROM $this->sqlkategorie WHERE id_zavodu = :race_id ORDER BY poradi";
+	    $sth = $this->db->prepare($sql);
+	    $sth->execute(Array(':race_id' => $this->race_id));
+	    if($sth->rowCount()){
+		$str .= '<table class="table table-bordered table-hover noborder table_vysledky">';
+		$k = 1;
+		while($data = $sth->fetchObject()){
+		    $sql1 = "SELECT tymy.nazev_tymu,$this->sqlvysledky.ids,MAX($this->sqlvysledky.race_time) AS cilovy_cas,$this->sqlkategorie.nazev_k AS nazev_kategorie FROM $this->sqlvysledky,$this->sqlzavod,$this->sqlkategorie,tymy "
+			      . "WHERE race_time > '0' "
+			      . "AND $this->sqlvysledky.time_order = :time_order " 
+			      . "AND $this->sqlzavod.id_kategorie = :id_kategorie  "
+			      . "AND $this->sqlzavod.id_kategorie = $this->sqlkategorie.id_kategorie "
+			      . "AND $this->sqlkategorie.poradi_podzavodu = '$this->event_order' "
+			      . "AND $this->sqlzavod.ids = $this->sqlvysledky.ids "
+			      . "AND $this->sqlzavod.tym = tymy.id_tymu "
+			      . "AND false_time IS NULL "
+			      . "AND lap_only IS NULL "
+			      . "GROUP BY $this->sqlzavod.ids "
+			      . "ORDER BY cilovy_cas ASC";
+		    //echo $sql1."\n\n";
+		    $sth1 =  $this->db->prepare($sql1);
+		    $sth1->execute(Array(':time_order' => $this->time_order,':id_kategorie' => $data->id_kategorie));
+		    if($sth1->rowCount()){
+			$class = $k == 1 ? $class = 'nadpis nopadding' : 'nadpis';
+			$str .= '<tr><td class="'.$class.'" colspan="3">'.$data->nazev_kategorie.'</td></tr>';
+			$str .= '<tr class="header"><th rowspan="2" class="text-center">#</th><th rowspan="2" class="text-center">St.č</th><th rowspan="2" >Tým</th>';
+			$str .= $this->TableHeaderTymyOrlice($this->time_order,$this->event_order);
+			$str .= '</tr>';
+			$xx = 1;
+			$str .= '<tr>';
+			while($xx <= $this->time_order){
+			    $str .= '<th><div class="jmeno">Jméno</div><div class="rocnik">Ročník</div><div class="cas">Čas</div><div class="poradi">Poř</div></th>';
+			    $xx++;
+			}
+			$str .= '</tr>'; 
+			$poradi = 1;
+			while($data1 = $sth1->fetchObject()){
+			    $sql3 = "SELECT CONCAT_WS(' ',osoby.prijmeni,osoby.jmeno) AS jmeno,osoby.rocnik,$this->sqlzavod.cip FROM osoby,$this->sqlzavod WHERE $this->sqlzavod.ids = :ids AND $this->sqlzavod.ido = osoby.ido ORDER BY $this->sqlzavod.id";
+			    $sth3 = $this->db->prepare($sql3);
+			    $sth3->execute(Array(':ids' => $data1->ids));
+			    $zavodnik_pole = Array();
+			    while($dbdata3 = $sth3->fetchObject()){
+				$zavodnik_pole[$dbdata3->cip] = $dbdata3;
+			    }
+			    $str .= '<tr>';
+			    $str .= '<td class="text-center">'.$poradi.'</td>';
+			    $str .= '<td class="text-center">'.$data1->ids.'</td>';
+			    $str .= '<td>'.$data1->nazev_tymu.'</td>';
+			    $sql2 = "SELECT * FROM $this->sqlvysledky WHERE ids = :ids AND false_time IS NULL AND lap_only IS NULL ORDER BY race_time ASC LIMIT 0,$this->time_order";
+			    $sth2 = $this->db->prepare($sql2);
+			    $sth2->execute(Array(':ids' => $data1->ids));
+			    $i = 1;
+			    $missing_time = false; //nastavení proměnné pro konntrolu, jestli má závodník všecky časy 
+			    while($val2 = $sth2->fetchObject()){
+				if($this->time_order == 1){//pokud je to první čas
+				    $str .= '<td><div class="jmeno">'.$zavodnik_pole[$val2->cip]->jmeno.'</div> <div class="rocnik">'.$zavodnik_pole[$val2->cip]->rocnik.'</div> <div class="cas">'.$val2->lap_time.'</div> <div class="poradi">'.$val2->rank_category_lap.'</div></td>';
+				    $str .= ($val2->distance_category != '00:00:00.00') ?  ('<td class="text-center">'.$val2->distance_category.'</td>') : ('<td class="text-center">-</td>');
+				}
+				else{//pokud je to jiný než první čas
+				    if($i <= $this->time_order){ 
+					if($val2->lap_time != '00:00:00.00' AND $missing_time == false){
+					    //$str .= '<td><table class="inner_table_vysledky"><tr><td class="jmeno">'.$zavodnik_pole[$val2->cip]->jmeno.'</td><td class="rocnik">'.$zavodnik_pole[$val2->cip]->rocnik.'</td><td class="cas">'.$val2->lap_time.'</td><td class="poradi">'.$val2->rank_category_lap.'</td></tr></table></td>';
+					    $str .= '<td><div class="jmeno">'.$zavodnik_pole[$val2->cip]->jmeno.'</div> <div class="rocnik">'.$zavodnik_pole[$val2->cip]->rocnik.'</div> <div class="cas">'.$val2->lap_time.'</div> <div class="poradi">'.$val2->rank_category_lap.'</div></td>';
+					}
+					else{
+					   $str .= '<td class="text-center">&nbsp;</td>';
+					   $missing_time = true; //byl nalezen nulový čas a tím pádem se vy výsledcích objeví pouze výsledný čas
+					}
+				    }
+				    if($i == $this->time_order){ // toto je poslední čas a tím pádem se tady vloží celkový čas a odstup
+					$str .= ($val2->race_time != '00:00:00.00') ? ('<td class="text-center">'.$val2->race_time.'</td>') : ('<td class="text-center">&nbsp;</td>');
+					$str .= ($val2->distance_category != '00:00:00.00') ?  ('<td class="text-center">'.$val2->distance_category.'</td>') : ('<td class="text-center">-</td>');
+				    }
+				}
+				$i++;
+			    }
+			    $str .= '</tr>';
+			$poradi++;
+			}
+		    }
+		    $k++;
+		}
+		$str .= '</table>';
+	    }
+	}
+
+	else{ // každá kategorie zvlášť
+	    $sql = "SELECT nazev_k AS nazev_kategorie FROM $this->sqlkategorie WHERE id_zavodu = :race_id AND id_kategorie = :category_id";
+	    $sth = $this->db->prepare($sql);
+	    $sth->execute(Array(':race_id' => $this->race_id,':category_id' => $category_id));
+	    if($sth->rowCount()){
+		$dbdata = $sth->fetchObject();
+		$str .= '<h4 class="headline-results">'.$this->race_name.', kategorie '.$dbdata->nazev_kategorie.'</h4>';
+		$str .= '<table class="table table-bordered table-hover table_vysledky">';
+		$k = 1;
+		$sql1 = "SELECT tymy.nazev_tymu,$this->sqlvysledky.ids,$this->sqlvysledky.ids_alias,MAX($this->sqlvysledky.race_time) AS cilovy_cas,$this->sqlkategorie.nazev_k AS nazev_kategorie FROM $this->sqlvysledky,$this->sqlzavod,$this->sqlkategorie,tymy "
+			  . "WHERE race_time > '0' "
+			  . "AND $this->sqlvysledky.time_order = :time_order " 
+			  . "AND $this->sqlzavod.id_kategorie = :category_id "
+			  . "AND $this->sqlzavod.id_kategorie = $this->sqlkategorie.id_kategorie "
+			  . "AND $this->sqlkategorie.poradi_podzavodu = '$this->event_order' "
+			  . "AND $this->sqlzavod.ids = $this->sqlvysledky.ids "
+			  . "AND $this->sqlzavod.tym = tymy.id_tymu "
+			  . "AND false_time IS NULL "
+			  . "AND lap_only IS NULL "
+			  . "GROUP BY $this->sqlzavod.ids "
+			  . "ORDER BY cilovy_cas ASC";
+		    $sth1 =  $this->db->prepare($sql1);
+		    $sth1->execute(Array(':time_order' => $this->time_order,':category_id' => $category_id));
+		    if($sth1->rowCount()){
+			$str .= '<thead><tr class="header"><th rowspan="2" class="text-center">#</th><th rowspan="2" class="text-center">St.č</th><th rowspan="2" >Tým</th>';
+			$str .= $this->TableHeaderTymyOrlice($this->time_order,$this->event_order);
+			$str .= '</tr>';
+			$xx = 1;
+			$str .= '<tr class=no_hover>';
+			while($xx <= $this->time_order){
+			    $str .= '<th><div class="jmeno">Jméno</div><div class="rocnik">Ročník</div><div class="cas">Čas</div><div class="poradi">Poř</div></th>';
+			    $xx++;
+			}
+			$str .= '</tr>'; 
+			$str .= '</thead><tbody>';
+			$poradi = 1;
+			while($data1 = $sth1->fetchObject()){
+			    $sql3 = "SELECT CONCAT_WS(' ',osoby.prijmeni,osoby.jmeno) AS jmeno,osoby.rocnik,$this->sqlzavod.cip FROM osoby,$this->sqlzavod WHERE $this->sqlzavod.ids = :ids AND $this->sqlzavod.ido = osoby.ido ORDER BY $this->sqlzavod.id";
+			    $sth3 = $this->db->prepare($sql3);
+			    $sth3->execute(Array(':ids' => $data1->ids));
+			    $zavodnik_pole = Array();
+			    while($dbdata3 = $sth3->fetchObject()){
+				$zavodnik_pole[$dbdata3->cip] = $dbdata3;
+			    }
+			    $str .= '<tr>';
+			    $str .= '<td class="text-center">'.$poradi.'</td>';
+			    $str .= '<td class="text-center">'.$data1->ids.'</td>';
+			    $str .= '<td>'.$data1->nazev_tymu.'</td>';
+			    $sql2 = "SELECT * FROM $this->sqlvysledky WHERE ids = :ids AND false_time IS NULL AND lap_only IS NULL ORDER BY race_time ASC LIMIT 0,$this->time_order";
+			    $sth2 = $this->db->prepare($sql2);
+			    $sth2->execute(Array(':ids' => $data1->ids));
+			    $i = 1;
+			    $missing_time = false; //nastavení proměnné pro konntrolu, jestli má závodník všecky časy 
+			    while($val2 = $sth2->fetchObject()){
+				if($this->time_order == 1){//pokud je to první čas 
+				    //$str .= '<td><table class="inner_table_vysledky"><tr><td class="jmeno">'.$zavodnik_pole[$val2->cip]->jmeno.'</td><td class="rocnik">'.$zavodnik_pole[$val2->cip]->rocnik.'</td><td class="cas">'.$val2->lap_time.'</td><td class="poradi">'.$val2->rank_category_lap.'</td></tr></table></td>';
+				    $str .= '<td><div class="jmeno">'.$zavodnik_pole[$val2->cip]->jmeno.'</div> <div class="rocnik">'.$zavodnik_pole[$val2->cip]->rocnik.'</div> <div class="cas">'.$val2->lap_time.'</div> <div class="poradi">'.$val2->rank_category_lap.'</div></td>';
+				    $str .= ($val2->distance_category != '00:00:00.00') ?  ('<td class="text-center">'.$val2->distance_category.'</td>') : ('<td class="text-center">-</td>');
+				}
+				else{//pokud je to jiný než první čas
+				    if($i <= $this->time_order){ 
+					if($val2->lap_time != '00:00:00.00' AND $missing_time == false){
+					    //$str .= '<td><table class="inner_table_vysledky"><tr><td class="jmeno">'.$zavodnik_pole[$val2->cip]->jmeno.'</td><td class="rocnik">'.$zavodnik_pole[$val2->cip]->rocnik.'</td><td class="cas">'.$val2->lap_time.'</td><td class="poradi">'.$val2->rank_category_lap.'</td></tr></table></td>';
+					    $str .= '<td><div class="jmeno">'.$zavodnik_pole[$val2->cip]->jmeno.'</div> <div class="rocnik">'.$zavodnik_pole[$val2->cip]->rocnik.'</div> <div class="cas">'.$val2->lap_time.'</div> <div class="poradi">'.$val2->rank_category_lap.'</div></td>';
+					}
+					else{
+					   $str .= '<td class="text-center">&nbsp;</td>';
+					   $missing_time = true; //byl nalezen nulový čas a tím pádem se vy výsledcích objeví pouze výsledný čas
+					}
+				    }
+				    if($i == $this->time_order){ // toto je poslední čas a tím pádem se tady vloží celkový čas a odstup
+					$str .= ($val2->race_time != '00:00:00.00') ? ('<td class="text-center">'.$val2->race_time.'</td>') : ('<td class="text-center">&nbsp;</td>');
+					$str .= ($val2->distance_category != '00:00:00.00') ?  ('<td class="text-center">'.$val2->distance_category.'</td>') : ('<td class="text-center">-</td>');
+				    }
+				}
+				$i++;
+			    }
+			    $str .= '</tr>';
+			    $poradi++;
+			}
+		    }
+		    else{
+			$str .= '<p>Žádný výsledek</p>';
+		    }
+		$k++;
+		$str .= '</tbody></table>';
+	    }
+	}
+    }
+?>

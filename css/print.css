@@ -1,0 +1,184 @@
+.navbar{display:none}
+
+.headline-results{
+  display:block;
+  margin:0 0 20px 0;
+  text-decoration:underline;
+  text-align:center;
+}
+
+#result_table table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+
+#result_table table td, #result_table table th{
+   border:1px solid gray;
+   padding:0 2px;
+   font-size:11px;
+   text-align:left;
+}
+
+
+/* opravováno 9.1.16, dělalo to psí kusy v tisku ve chromu, když se definovalo border, třídy přejmenovány na nadpiss, protože jsem si myslel, že to záhadně způsobuje to slovo "nadpis", ale to byl asi nesmysl */
+#result_table table .nadpis{
+   border:none;
+   padding:20px 0 0 0;
+   font-style: italic;
+   font-weight:bold;
+   text-align:left;
+}
+.nopadding{
+  padding:0!Important;
+}
+
+
+.text-center{
+  text-align:center!Important;
+}
+
+
+.minus_margin{margin-top:-10px!Important}
+.hlavicka{font-weight:bold}
+.vysldky td{
+   border:1px solid gray;
+   padding:0 2px;
+}
+.vysledky td.nadpis{
+    padding:20px 0 0 0;
+    font-size:14px;
+    border:none;
+    text-align:left;
+}
+.size_30{
+  width:30px;
+}
+.size_80{
+  width:80px;
+}
+.size_100{
+  width:100px;
+}
+
+.size_150{
+  width:150px;
+}
+.size_200{
+  width:200px;
+}
+.size_250{
+  width:250px;
+}
+a{
+  text-decoration:none;
+  color:black;
+}
+.reklama-lista-dolni{
+  margin-top:10px;
+}
+
+
+
+
+.inner_table_vysledky{
+    width:100%;
+}
+.inner_table_vysledky td,.inner_table_vysledky th{
+    pading:0 4px!Important;
+    border:none!Important;
+}
+.inner_table_vysledky .jmeno{
+    width:40%;
+}
+.inner_table_vysledky .rocnik{
+    width:30%;
+    text-align:center;
+    backgrond:red;
+}
+.inner_table_vysledky .cas{
+    width:27%;
+    text-align:center
+}
+.inner_table_vysledky .poradi{
+    width:3%;
+    text-align:center
+}
+
+
+html, body {
+height: 100%;
+
+}
+
+bdy {
+font-family: Tahoma, Verdana, Arial, lucida, sans-serif;
+background: #fff;
+color: #000;
+font-size: x-small;
+text-align: center;
+min-width: 760px;
+line-height: 1.5;
+}
+
+
+
+
+.paticka{
+   font-size: x-small;
+    display:block;
+    heht:90px;
+    width:100%;
+    position:absolute;
+    bottom:0;
+    text-align:left;
+    
+}
+.paticka .delka_trati{
+    text-align:left;
+}
+
+
+#startlist tr td{
+    font-size:14px!Important;
+}
+
+.orlice_cup td{
+  font-size: 8px!Important;
+}
+
+.datum_zavodu_cc{
+    text-align:right;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.paticka_cams{
+    margin-top: 20px;
+    diplay:none;
+  position:fixed;
+  bottom:0px;
+  width:100%; 
+  font-size:12px;
+}
+.paticka_cams p{
+    border-bottom: 1px solid black;
+    margin:0;
+    padding-left:3px;
+}
+.paticka_cams table{
+    width:100%;
+}
+
+.headline-results{
+    margin:0!Important;
+    padding:0!Important;
+    font-size:12px!Important;
+    text-decoration:none!Important;
+    text-align: left!Important;
+}
+
+.print_display_none{
+    display:none!Important;
+}

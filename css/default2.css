@@ -1,0 +1,530 @@
+body{
+    padding-top: 90px;
+}
+
+.navbar{
+    border:none;
+    border-bottom: 1px solid #000000;
+}
+
+ .navbar-raceadmin{
+     background:black;
+     border:1px solid #E1E1E1;
+ }
+ .timechip-menu-navbar{
+   margin-top:9px;
+ }
+ .vysledky{
+   margin-top: 10px;
+ }
+
+.noborder{
+   border:none!Important;
+ }
+ .nopadding{
+   padding:0!Important;
+ }
+ 
+  #nopadding{
+   padding:0!Important;
+ }
+ nomargin{
+   margin:0!Important;
+ }
+
+
+ .navbar-right{
+   margin-right:0!Important;
+ }
+
+ .headline-results{
+   display:none;
+ }
+.editace_casu{
+    text-align:center;
+    border-collapse:separate!Important;
+    border-spacing:9px;
+}
+.editace_casu td{
+    border:1px solid #ABADB3;
+    padding:0 2px;
+}
+.editace_casu td div{
+  padding:4px 8px;
+  position:relative;
+}
+
+.delete,.re-delete{
+    width:15px;height:15px;
+    position:absolute;
+    top:-7px;right:-7px;
+    }
+.delete img,.re-delete img{
+  display:block;
+}
+
+.editace_casu td .jmeno{
+  display:block;
+  text-align:left;
+    paddig:4px 8px;
+}
+ .editace_casu td .jmeno:hover{
+   backgrond:gray;
+ }
+
+
+.racer_time_edit{
+    margin:0 auto 10px auto;
+    text-align:center;
+    border-collapse:separate!Important;
+    border-spacing:5px;
+}
+.racer_time_edit td{
+   border:1px solid #ABADB3;
+}
+.racer_time_edit input{
+  padding:5px 0;
+  text-align:center;
+  border:none;
+}
+.racer_time_edit_button{
+  margin:0 auto 5px auto;
+  text-align:center;
+}
+#time_edit_div_one{
+  width:530px;
+}
+form .row{
+  margin:0 0 5px 0;
+}
+.race_settings td{
+  padding:2px 50px 2px 0;
+}
+.race_settings input{
+  width:300px;
+  text-align:center;
+
+}
+
+.vetsi_radky td{
+  font-size:16px;
+  font-size:20px;
+  padding:10px 2px!Important;
+}
+.vetsi_radky th{
+  font-size:20px;
+  background:black;
+  color:white;
+  padding:0 10px!Important;
+}
+
+.xxl_radky td{
+    font-size:70px;
+    padding:10px!Important;
+}
+
+
+.xxl_header{
+    background:#414141;
+}
+
+.xxl_header th{
+    font-size:30px;
+    color:white;
+    vertical-align: middle!Important;
+}
+
+
+.color_red{
+  color:red;
+}
+.color_blue{
+    color:blue;
+}
+.background_green{
+    background:green!Important;
+    color:white;
+}
+.background_red{
+    background:red!Important;
+    color:white;
+}
+.background_blue{
+    background:#507CD1!Important;
+    color:white;
+}
+
+.stredni_radky td,.stredni_radky th{
+  font-size:16px;
+  padding:5px 5px 5px 5px !Important;
+  vertical-align:middle!Important;
+}
+.j_k{
+  background:black;
+  color:white!Important;
+}
+#spinner{
+    display: none;
+    width:100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    text-align:center;
+    margin-left: -50px;
+    margin-top: -100px;
+    z-index:2;
+    overflow: auto;
+}
+
+.reklama-lista-horni{
+  margin-bottom:10px;
+}
+.reklama-lista-dolni{
+  padding-top:20px;
+}
+
+.table-hover tbody tr:hover td {
+    backgound: #2A2A2A;
+    colo:white;
+}
+
+
+
+
+.autoreading_results th{
+    padding:0 10px!Important;
+}
+.paticka,.datum_nadpis{
+    display:none;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: yellow;
+}
+
+.table-keyboard{
+    border-collapse: separate!Important;
+    border-spacing:5px;
+    font-size:100px;
+    width:auto;
+}
+.table-keyboard td{
+    padding:0 20px!Important;
+    border-collapse: separate!Important;
+    text-align:center;
+    vertical-align:middle;
+    line-height: 100px!Important;
+    background:gray;
+    color:white;
+}
+.table-keyboard td.keyboard_number,.table-keyboard td.result_search_clear,.table-keyboard td.result_search_submit{
+    cursor:pointer;
+}
+
+.table-keyboard td.keyboard_number:hover{
+    background:#464646;
+}
+.table-keyboard td.result_search_clear:hover{
+    background:#cc0000;
+}
+.table-keyboard td.result_search_submit:hover{
+    background:#336600;
+}
+
+.table-keyboard td.result_search_clear{
+    background:orange;
+}
+.table-keyboard td.result_search_submit{
+    background:#33ff00;
+}
+.table-keyboard td.result_search_ids{
+    background:#00ccff;
+}
+
+.navbar-custom {
+    
+    background-color:black;
+    color:white!Important;
+    font-weiht:bold;
+}
+.navbar-results {
+    border-color:#000000;
+    background-color:black;
+    color:white;
+}
+
+
+.navbar-brand-custom{
+    background:red;
+    color:white!Important;
+    padding:22px 20px 42px 20px;
+}
+
+.navbar-brand-custom:hover{
+    background:#000000!Important; /* odněkud se tam brala bílá, tak tohle je v téhle chvíli provizorka */
+}
+
+#menu a{
+    color:white!Important;
+    padding:30px;
+    font-size:24px;
+    borer-right:1px solid #000000;
+    font-weigt:bold;
+}
+#menu a:hover{
+    background: #00ccff;
+    color: white!Important;
+}
+#strankovani a{
+    font-size:18px;
+    color:#000000;
+}
+
+ .input-lg{
+    height: 60px !Important;
+    line-height: 60px !Important;
+    font-size:24px;
+}
+ 
+
+
+
+
+.panel-default{
+    border-color:#000000;
+}
+.form-control{
+    border-color:#000000;
+    background-color:white;
+    color:#000000;
+}
+
+
+
+.detail_ids{
+  width:auto;
+}
+
+.detail_ids .header{
+    background:#414141;
+    color:white;  
+} 
+
+.detail_ids td{
+   font-size:18px;
+   padding:1px 5px!Important;
+}
+
+
+
+
+.align_center{
+    text-align:center!Important;
+}
+
+
+
+.orlice_cup td,.orlice_cup th{
+  vertical-align: middle!Important;
+}
+
+.orlice_cup th{
+    background:#414141;
+    color:white;
+}
+
+.orlice_cup .orlice_cup_tr td{
+   fot-size:12px!Important; 
+   padding:5px 0 5px 5px!Important;
+   font-weight:bold;
+}
+
+
+
+
+
+.jmeno{
+    float:left;
+    width:45%;
+    overflow:hidden;
+}
+.rocnik{
+    float:left;
+    width:20%;
+    text-align:center;
+    overflow: hidden;
+}
+
+.cas{
+    float:left;
+    width:25%;
+    text-align:center;
+    overflow: hidden;
+}
+.poradi{
+    float:left;
+    width:10%;
+    text-align:center;
+    overflow: hidden;
+}
+.datum_zavodu_cc{
+    display:none;
+}
+
+.paticka_cams{
+    display:none;
+}
+
+ 
+
+#result_table table{
+    font-size:13px;
+ }
+ #result_table table td{
+     paing:1px 2px;
+     pading:1px 6px!Important;
+ }
+ 
+ #startlist{
+     font-size:13px;
+ }
+ #startlist td{
+      padding:1px 6px;
+ }
+ 
+
+.table_vysledky td,.table_vysledky th{
+  vertical-align: middle!Important;
+}
+
+ 
+
+.table_vysledky .nazev_discipliny{
+    padding:0 6px;
+    background: gray;
+    color:white;
+}
+ 
+.table_vysledky td.nadpis{
+   border:none!Important;
+   background:none!Important;
+   padding:60px 0 0 10px!Important;
+   font-weight:bold;
+   font-size:20px!Important;
+   color:red;
+ }
+ 
+ .table_vysledky .header th{
+    background:#000000!Important;
+    color:white;
+}
+
+.table_vysledky td{
+    font-size:18px;
+    padding:1px 6px!Important;
+}
+
+ .table_vysledky #header{
+    background:#414141!Important;
+    color:white;
+}
+ 
+ 
+ 
+ .inner_table_vysledky{
+    width:100%;
+}
+.inner_table_vysledky td,.inner_table_vysledky th{
+    pading:0 4px!Important;
+}
+.inner_table_vysledky .jmeno_zal_stary_zpusob_orlice{
+    width:40%;
+}
+.inner_table_vysledky .rocnik_zal_stary_zpusob_orlice{
+    width:30%;
+    text-align:center;
+    backgrond:red;
+}
+.inner_table_vysledky .cas_zal_stary_zpusob_orlice{
+    width:27%;
+    text-align:center
+}
+.inner_table_vysledky .poradi_zal_stary_zpusob_orlice{
+    width:3%;
+    text-align:center
+}
+
+.inner_table_vysledky tr.inner_table_vysledky_header:hover td{	
+    /* tuhle pakárnu je třeba udělat kvůli tomu, aby nehoveravala hlavička tabulky */
+    background:red;
+    color:#333;
+}
+
+.jumbotron_teribear{
+    background:#7ac8ce url(../images/logo_teribear.png) no-repeat 320px 150px;
+    color:white;
+}
+
+.jmeno_ac{
+    float:left;
+    width:50%;
+    overflow:hidden;
+}
+
+.cas_ac{
+    float:left;
+    width:40%;
+    text-align:center;
+    overflow: hidden;
+}
+.poradi_ac{
+    float:left;
+    width:10%;
+    text-align:center;
+    overflow: hidden;
+}
+
+
+ .nadpis{
+   border:none!Important;
+   background:none!Important;
+   padding:60px 0 0 0!Important;
+   font-weight:bold;
+ }
+ 
+ .btn-danger{
+     backround:red!Important;
+     
+ }
+ 
+ .table_vysledky_enduro td,.table_vysledky_enduro th{
+  vertical-align: middle!Important;
+}
+
+
+ .table_vysledky_enduro td, .table_vysledky_enduro th{
+     color:white;
+     padding:10px 5px!Important;
+ }
+.table_vysledky_enduro th{
+     color:black;
+    
+ }
+ 
+ .table-striped > tbody > tr:nth-child(odd) > td{
+     bakground-color:red 
+ }
+ 
+  .tble-striped > tbody > tr:nth-child(even) > td{
+     background-color:black
+ }
+ 
+ .cleaner{
+	clear:both;
+	font-size:0;
+	height:0;
+	line-height:0; /* ie 6 */
+    visibility:hidden
+}
+ 
